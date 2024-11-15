@@ -9,6 +9,11 @@ def Configure():
     load_dotenv()
     return os.getenv("OPENAI_API_KEY")
 
+#Checks api key
+def ValidateKey(apiKey):
+    if not apiKey or not isinstance(apiKey, str) or len(apiKey.strip()) == 0:
+        raise ValueError("Błędny klucz lub brak klucza. Klucz nalezy podac w pliku .env, OPENAI_API_KEY=<Tutaj podaj klucz>")
+
 #Reading file selected by user
 def ReadFile():
     #code allows user to select their designated file
@@ -48,6 +53,7 @@ def CreateArticle(fileContent):
 
 def Main():
     apiKey = Configure()
+    ValidateKey(apiKey)
     fileContent = ReadFile()   
     promptText = (   
         "Przekształć poniższy artykuł na kod HTML, używając odpowiednich tagów. "
